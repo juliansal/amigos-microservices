@@ -1,0 +1,22 @@
+services:
+  postgres:
+    container_name: amigos_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: amigos
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres_net
+    restart: unless-stopped
+
+networks:
+  postgres_net:
+    driver: bridge
+
+volumes:
+  postgres:
