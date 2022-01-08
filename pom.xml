@@ -11,10 +11,11 @@
 
     <modules>
         <module>customer</module>
+        <module>fraud</module>
+        <module>eureka-server</module>
     </modules>
 
     <name>amigos-microservices</name>
-    <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
     <properties>
@@ -22,6 +23,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <spring.boot.maven.plugin.version>2.6.1</spring.boot.maven.plugin.version>
+        <spring.cloud-version>2021.0.0</spring.cloud-version>
     </properties>
 
     <dependencyManagement>
@@ -32,6 +34,13 @@
                 <version>${spring.boot.maven.plugin.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
