@@ -2,6 +2,7 @@ package org.harppykraken.fraud;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.happykraken.clients.fraud.FraudCheckResponse;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor

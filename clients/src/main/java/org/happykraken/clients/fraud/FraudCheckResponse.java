@@ -1,4 +1,4 @@
-package org.harppykraken.fraud;
+package org.happykraken.clients.fraud;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
