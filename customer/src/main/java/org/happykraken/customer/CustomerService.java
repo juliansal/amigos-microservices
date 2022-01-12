@@ -3,6 +3,8 @@ package org.happykraken.customer;
 import lombok.AllArgsConstructor;
 import org.happykraken.clients.fraud.FraudCheckResponse;
 import org.happykraken.clients.fraud.FraudClient;
+import org.happykraken.clients.notifications.NotificationsClient;
+import org.happykraken.clients.notifications.NotificationsRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,8 +16,8 @@ import java.util.stream.Collectors;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
     private final FraudClient fraudClient;
+    private final NotificationsClient notificationsClient;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -33,6 +35,13 @@ public class CustomerService {
             throw new IllegalStateException("this is a fraudster");
         }
         // todo: send notification
+        notificationsClient.sendNotification(
+                new NotificationsRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi, %s, welcome to Amigos...", customer.getFirstName())
+                )
+        );
     }
 
     public List<Customer> getCustomers() {

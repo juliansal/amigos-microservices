@@ -1,13 +1,11 @@
 package org.happykraken.customer;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class CustomerRegistrationRequest {
     private String firstName;
     private String lastName;
