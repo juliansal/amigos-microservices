@@ -16,6 +16,7 @@
         <module>clients</module>
         <module>notifications</module>
         <module>api-gateway</module>
+        <module>amqp</module>
     </modules>
 
     <name>amigos-microservices</name>
