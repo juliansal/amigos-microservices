@@ -69,7 +69,7 @@
             <plugins>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
-                    <artifactId>springws-maven-plugin</artifactId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.maven.plugin.version}</version>
                 </plugin>
             </plugins>
