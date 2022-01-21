@@ -19,6 +19,8 @@ services:
     container_name: zipkin
     ports:
       - "9411:9411"
+    networks:
+      - spring_net
 
   rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
@@ -26,9 +28,86 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - spring_net
+
+  eureka-server:
+    image: juliansal/amigos-eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring_net
+    depends_on:
+      - zipkin
+
+  api-gateway:
+    image: juliansal/amigos-api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring_net
+    depends_on:
+      - zipkin
+      - eureka-server
+
+  customer:
+    image: juliansal/amigos-customer:latest
+    container_name: customer
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring_net
+      - postgres_net
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
+
+  fraud:
+    image: juliansal/amigos-fraud:latest
+    container_name: fraud
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring_net
+      - postgres_net
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
+
+  notifications:
+    image: juliansal/amigos-notifications:latest
+    container_name: notifications
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring_net
+      - postgres_net
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
 
 networks:
   postgres_net:
+    driver: bridge
+  spring_net:
     driver: bridge
 
 volumes:
